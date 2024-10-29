@@ -11,10 +11,10 @@ class HanoiTowersRecursiveController: HanoiTowersController, @unchecked Sendable
     
     func solve(disks: Int) -> [SolutionStep] {
         var steps: [SolutionStep] = []
-        solve(disks: disks, source: "A", auxiliary: "B", destination: "C", steps: &steps)
+        solve(disks: disks, source: AppConstants.Hanoi.sourceRod, auxiliary: AppConstants.Hanoi.auxiliaryRod, destination: AppConstants.Hanoi.destinationRod, steps: &steps)
         return steps
         
-//        solveParallel(disks: disks, source: "A", auxiliary: "B", destination: "C")
+        //solveParallel(disks: disks, source: AppConstants.Hanoi.sourceRod, auxiliary: AppConstants.Hanoi.auxiliaryRod, destination: AppConstants.Hanoi.destinationRod)
     }
     
     private func solve(disks: Int, source: String, auxiliary: String, destination: String, steps: inout [SolutionStep]) {
@@ -39,7 +39,7 @@ class HanoiTowersRecursiveController: HanoiTowersController, @unchecked Sendable
     var rightSteps: [SolutionStep] = []
     
     @Sendable func solveParallel(disks: Int, source: String, auxiliary: String, destination: String) -> [SolutionStep] {
-        let queue = DispatchQueue(label: "hanoi.queue", attributes: .concurrent)
+        let queue = DispatchQueue(label: AppConstants.Hanoi.queueName, attributes: .concurrent)
         let group = DispatchGroup()
         
         @Sendable func hanoi(_ n: Int, from source: String, to destination: String, aux: String) -> [SolutionStep] {

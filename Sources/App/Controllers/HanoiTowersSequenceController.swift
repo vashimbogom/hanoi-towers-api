@@ -10,7 +10,7 @@ import Foundation
 class HanoiTowersSequenceController: HanoiTowersController {
     
     func solve(disks: Int) -> [SolutionStep] {
-        Array(HanoiSequence(disks: disks, source: "A", auxiliary: "B", destination: "C"))
+        Array(HanoiSequence(disks: disks, source: AppConstants.Hanoi.sourceRod, auxiliary: AppConstants.Hanoi.auxiliaryRod, destination: AppConstants.Hanoi.destinationRod))
     }
 }
 

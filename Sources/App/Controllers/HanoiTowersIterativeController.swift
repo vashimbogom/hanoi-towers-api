@@ -10,7 +10,7 @@ import Foundation
 class HanoiTowersIterativeController: HanoiTowersController {
     
     func solve(disks: Int) -> [SolutionStep] {
-        solve(disks: disks, source: "A", auxiliary: "B", destination: "C")
+        solve(disks: disks, source: AppConstants.Hanoi.sourceRod, auxiliary: AppConstants.Hanoi.auxiliaryRod, destination: AppConstants.Hanoi.destinationRod)
     }
     
     private func solve(disks: Int, source: String, auxiliary: String, destination: String) -> [SolutionStep] {

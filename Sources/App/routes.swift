@@ -2,31 +2,37 @@ import Vapor
 
 func routes(_ app: Application) throws {
     app.get { req async in
-        "The Hanoi Towers Problem Solver API. Usage: /solve/{ rec | iter | seq }/{ number_of_discs }"
+        AppConstants.Hanoi.Screens.welcomeMessage
     }
     
-    app.get("solve", ":algorithm", ":discs") { req async throws -> [SolutionStep] in
+    app.get(
+        "solve",
+        ":\(AppConstants.Hanoi.Parameters.algorithm)",
+        ":\(AppConstants.Hanoi.Parameters.numberOfDisks)")
+    { req async throws -> [SolutionStep] in
         
-        guard let alg = req.parameters.get("algorithm", as: String.self),
-              alg == "rec" || alg == "iter" || alg == "seq"
+        guard let alg = req.parameters.get(AppConstants.Hanoi.Parameters.algorithm, as: String.self),
+              alg == AppConstants.Hanoi.Algorithm.recursive
+                || alg == AppConstants.Hanoi.Algorithm.iterative
+                || alg == AppConstants.Hanoi.Algorithm.sequential
         else {
-            throw Abort(.badRequest, reason: "Missing solution algorithm query parameter. Usage: /solve/{ rec | iter | seq }/{ number_of_discs }")
+            throw Abort(.badRequest, reason: AppConstants.Hanoi.ErrorMessages.missingAlgorithParameter)
         }
         
-        guard let discs = req.parameters.get("discs", as: Int.self) else {
-            throw Abort(.badRequest, reason: "Missing number of discs parameter. Usage: /solve/{ rec | iter | seq }/{ number_of_discs }")
+        guard let discs = req.parameters.get(AppConstants.Hanoi.Parameters.numberOfDisks, as: Int.self) else {
+            throw Abort(.badRequest, reason: AppConstants.Hanoi.ErrorMessages.missingDisksParameter)
         }
         
         if discs > 13 {
-            throw Abort(.payloadTooLarge, reason: "Wo wo wo!!! Don't be too greedy! 13 is the max number of Disks.")
+            throw Abort(.payloadTooLarge, reason: AppConstants.Hanoi.ErrorMessages.exceedsMaxDisks)
         }
         
         var controller: HanoiTowersController
         
         // Choose controller to solve the problem
-        if alg == "rec" {
+        if alg == AppConstants.Hanoi.Algorithm.recursive {
             controller = HanoiTowersRecursiveController()
-        } else if alg == "iter" {
+        } else if alg == AppConstants.Hanoi.Algorithm.iterative {
             controller = HanoiTowersIterativeController()
         } else {
             controller = HanoiTowersSequenceController()
