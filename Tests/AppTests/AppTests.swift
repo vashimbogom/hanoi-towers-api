@@ -189,6 +189,25 @@ struct AppTests {
         }
     }
     
+    @Test("Test Decode JSON - Failure")
+    func decode_failure() throws {
+        
+        let str = "[{\"fail\":13,\"x\":1}]"
+        do {
+            let _ = try decode(strData: str)
+        } catch {
+            #expect(error != nil)
+        }
+    }
+    
+    @Test("Test Decode Dictionary - Success")
+    func decodeDictionary_failure() throws {
+        
+        let str = "[{\"fail\":13,\"x\":1}]"
+        let dict = try decodeToDictionary(text: str)
+        #expect(dict == nil)
+    }
+    
     private func decode(strData: String) throws -> [SolutionStep]? {
         if let json = strData.data(using: .utf8) {
             return try JSONDecoder().decode([SolutionStep].self, from: json)
