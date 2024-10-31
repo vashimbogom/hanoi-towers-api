@@ -38,7 +38,6 @@ func routes(_ app: Application) throws {
             controller = HanoiTowersSequenceController()
         }
         // Solve the Hanoi Towers problem
-        controller = HanoiTowersRecursiveController()
         return controller.solve(disks: discs)
     }
 }

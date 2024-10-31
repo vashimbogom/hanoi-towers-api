@@ -30,10 +30,9 @@ final class TestSequencePerformanceTests: XCTestCase {
         }
     }
     
-//    func testPerformance_50_Disks() throws {
-//        measure {
-//            _ = controller.solve(disks: 50)
-//        }
-//    }
-    
+    func testPerformance_29_Disks() throws {
+        measure {
+            _ = controller.solve(disks: 29)
+        }
+    }
 }
